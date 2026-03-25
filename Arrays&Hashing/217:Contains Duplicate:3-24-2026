@@ -1,0 +1,28 @@
+# Problem link: https://leetcode.com/problems/contains-duplicate/description/ 
+# Difficulty: Easy
+
+# Problem statement:
+# Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
+
+# Solution: time complexity O(n) and space complexity O(n). The same solution shows exceed time limit if we use list instead of set/hashmap.
+
+
+
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        # beats 69%
+        '''
+        unq_set = set()
+        for num in nums:
+            if num in unq_set:
+                return True
+            unq_set.add(num)
+        return False
+        '''
+        # Beats 65%
+        unq_set = {}
+        for num in nums:
+            if num in unq_set:
+                return True
+            unq_set[num] = 1
+        return False
