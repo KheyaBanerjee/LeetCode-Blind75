@@ -1,0 +1,27 @@
+# Problem link: https://leetcode.com/problems/valid-anagram/description/ 
+# Difficulty: Easy
+
+# Problem statement:
+# Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+
+# Solution: Soln 1: Two dictionaries - time complexity O(s+t) and space complexity O(s+t). To reduce the space complexity, the default sort function can be used
+#           Soln 2: Sorting - time complexity O(nlogn), depends on the sorting algorithm, bubble sort can be O(n^2) and space complexity is O(1) but some sorting algorithm do require O(n) memory.
+
+
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        
+        # Soln 1: Two dictionaries
+        if len(s) != len(t):
+            return False
+        orderS, orderT = {}, {}
+        for i in range(len(s)):
+            orderS[s[i]] = 1 + orderS.get(s[i], 0)
+            orderT[t[i]] = 1 + orderT.get(t[i], 0)
+        for o in orderS:
+            if orderS[o] != orderT.get(o, 0):
+                return False
+        return True
+        
+        # Soln 2: Sorting
+        return sorted(s) == sorted(t)
