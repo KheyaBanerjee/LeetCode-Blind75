@@ -1,10 +1,16 @@
+# Problem link: https://leetcode.com/problems/group-anagrams/description/
+# Difficulty: Medium
+
+# Problem statement:
+# Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+
+# Solution: for both solutions, time complexity O(M*NlogN): NlogN for sorting m=len(strs) and space complexity O(m). For Soln 1, space complexity might be a little more.
+
 
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
       
         # Soln 1: Sort each word, store in dictionary without any default functions
-        # O(M*NlogN) NlogN for sorting M=len(strs)
-
         hashmap, res = {}, []
         for i, word in enumerate(strs):
             sortedword = ''.join(sorted(word))
@@ -18,3 +24,13 @@ class Solution:
                 tmpres.append(strs[hashmap[item][i]])
             res.append(tmpres)
         return res
+
+        # Soln 2: same approach, but using some default functions
+        hashmap = {}
+        for i, word in enumerate(strs):
+            sortedword = str(sorted(word))
+            if sortedword not in hashmap:
+                hashmap[sortedword] = [word]
+            else:
+                hashmap[sortedword].append(word)
+        return list(hashmap.values())
