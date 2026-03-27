@@ -1,0 +1,20 @@
+
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+      
+        # Soln 1: Sort each word, store in dictionary without any default functions
+        # O(M*NlogN) NlogN for sorting M=len(strs)
+
+        hashmap, res = {}, []
+        for i, word in enumerate(strs):
+            sortedword = ''.join(sorted(word))
+            if sortedword in hashmap:
+                hashmap[sortedword].append(i)
+            else:
+                hashmap[sortedword] = [i]
+        for item in hashmap:
+            tmpres = []
+            for i in range(len(hashmap[item])):
+                tmpres.append(strs[hashmap[item][i]])
+            res.append(tmpres)
+        return res
