@@ -1,0 +1,28 @@
+
+class Solution:
+    def twoSum(self, nums: List[int], target: int):
+        '''
+        # Brute
+        for i in range(len(nums)):
+            for j in range(i+1, len(nums)):
+                if nums[i] + nums[j] == target:
+                    return [i, j]
+        
+        # Hashmap - store curr index
+        hashmap = {}
+        for i, e in enumerate(nums):
+            if (target - e) in hashmap:
+                return [i, hashmap[target - e][0]]
+            
+            if e not in hashmap:
+                hashmap[e] = [i]
+            else:
+                hashmap[e].append(i)
+        '''
+        # hashmap - store target index
+        hashmap = {}
+        for i, num in enumerate(nums):
+            if num in hashmap:
+                return [i, hashmap[num]]
+            else:
+                hashmap[target-num] = i
