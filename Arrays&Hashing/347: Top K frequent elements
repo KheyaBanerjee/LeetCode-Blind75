@@ -4,8 +4,11 @@
 # Problem statement:
 # Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
 
-# Solution: For solution 1, time complexity O(NlogN) - for sorting and space complexity O(N)
-#           For solution 2, time complexity O(N) + O(KlogN); for heapifying O(N), for popping/pushing from heap once O(logN)
+# Solution: For solution 1, time complexity O(NlogN) - for sorting and space complexity O(N) for dictionary
+#           For solution 2, time complexity O(N) + O(KlogN); for heapifying O(N), for popping/pushing from heap once O(logN) and space complexity O(N) for dictionary
+#           <mark>For solution 3</mark>, time complexity O(N) for bucket sort and space complexity O(N) for dictionary
+#           Bucket sort means storing numbers in an array where the index matches the number and count is the array element. This has time complexity of O(N) but in this case we don't know what number range we have.
+#           So, we are doing a modified bucket sort where count is the index and array elements are the set of numbers with the index count.
 
 # Soln 1: dictionary + sort
 class Solution:
@@ -35,3 +38,21 @@ class Solution:
         for _ in range(k):
             res.append(heapq.heappop(maxheap)[1])
         return res
+
+# Soln 3: Bucket sort; a modified form
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        count, res = {}, []
+        bubbl_freq = [[] for _ in range(len(nums) + 1)]
+        for num in nums:
+            if num not in count:
+                count[num] = 1
+            else:
+                count[num] += 1
+        for key, val in count.items():
+            bubbl_freq[val].append(key)
+        for i in range(len(bubbl_freq)-1, 0, -1):
+            for num in bubbl_freq[i]:
+                res.append(num)
+            if len(res) == k:
+                return res       
