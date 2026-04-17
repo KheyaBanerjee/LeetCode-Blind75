@@ -1,0 +1,21 @@
+# Problem link: https://leetcode.com/problems/top-k-frequent-elements/description/
+# Difficulty: Medium
+
+# Problem statement:
+# Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
+
+# Solution: For solution 1, time complexity O(NlogN) - for sorting and space complexity O(N)
+
+
+# Soln 1: dictionary + sort
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        # Store frequencies in a dictionary, then sort the dictionary w.r.t values and select first K elements
+        freq, res = {}, []
+        for num in nums:
+            if num not in freq:
+                freq[num] = 1
+            else:
+                freq[num] += 1
+        sorted_freq = dict(sorted(freq.items(), key=lambda item: item[1], reverse=True))
+        return list(sorted_freq.keys())[:k]
