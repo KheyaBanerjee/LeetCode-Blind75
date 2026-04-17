@@ -5,7 +5,7 @@
 # Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
 
 # Solution: For solution 1, time complexity O(NlogN) - for sorting and space complexity O(N)
-
+#           For solution 2, time complexity O(N) + O(KlogN); for heapifying O(N), for popping/pushing from heap once O(logN)
 
 # Soln 1: dictionary + sort
 class Solution:
@@ -19,3 +19,19 @@ class Solution:
                 freq[num] += 1
         sorted_freq = dict(sorted(freq.items(), key=lambda item: item[1], reverse=True))
         return list(sorted_freq.keys())[:k]
+
+# Soln 2: Dictionary + heap
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:        
+        dic, res = {}, []
+        for num in nums:
+            if num not in dic:
+                dic[num] = 1
+            else:
+                dic[num] += 1
+        maxheap = []
+        for elem in dic:
+            heapq.heappush(maxheap, (-dic[elem], elem))
+        for _ in range(k):
+            res.append(heapq.heappop(maxheap)[1])
+        return res
