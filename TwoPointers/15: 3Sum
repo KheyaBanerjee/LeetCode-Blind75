@@ -1,0 +1,32 @@
+# Problem link: https://leetcode.com/problems/3sum/
+# Difficulty: Medium
+
+# Problem statement:
+# Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+# Notice that the solution set must not contain duplicate triplets.
+
+# Solution: time complexity O(NlogN)+O(N^2)=O(N^2) sorting + traversing the arr twice and space complexity O(1); can be O(N) if sorting needs memory.
+
+
+
+# Two pointer, with sorting
+class Solution:
+    def threeSum(self, arr: List[int]) -> List[List[int]]:
+        triplets = []
+        arr.sort()
+        for i, a in enumerate(arr):
+            if i > 0 and a == arr[i-1]:
+                continue
+            left, right = i+1, len(arr)-1
+            while left < right:
+                threeSum = a + arr[left] + arr[right]
+                if threeSum > 0:
+                    right -= 1
+                elif threeSum < 0:
+                    left += 1
+                else:
+                    triplets.append([a, arr[left], arr[right]])                    
+                    left += 1
+                    while arr[left] == arr[left-1] and left < right:
+                        left += 1                    
+            return triplets
