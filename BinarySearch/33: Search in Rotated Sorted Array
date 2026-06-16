@@ -1,0 +1,31 @@
+# Problem link: https://leetcode.com/problems/search-in-rotated-sorted-array/description/
+# Difficulty: Medium
+
+# Problem statement:
+# There is an integer array nums sorted in ascending order (with distinct values).Prior to being passed to your function, nums is possibly left rotated at an unknown index k (1 <= k < nums.length)
+# Given the array nums after the possible rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums.
+# You must write an algorithm with O(log n) runtime complexity.
+
+# Solution: time complexity O(logN) and space complexity O(1)
+
+# Binary search 
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        left, right = 0, len(nums) - 1
+        while left <= right:
+            mid = (left + right) // 2
+            if nums[mid] == target:
+                return mid
+            # if in left sorted portion
+            if nums[mid] >= nums[left]:
+                if nums[mid] < target or nums[left] > target:
+                    left = mid + 1
+                else:
+                    right = mid - 1
+            # if in the right sorted portion
+            else:
+                if nums[mid] > target or nums[right] < target:
+                    right = mid - 1                    
+                else:
+                    left = mid + 1
+        return -1        
