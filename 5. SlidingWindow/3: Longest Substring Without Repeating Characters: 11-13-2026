@@ -1,0 +1,22 @@
+# Problem link: https://leetcode.com/problems/longest-substring-without-repeating-characters/
+# Difficulty: Medium
+
+# Problem statement:
+# Given a string s, find the length of the longest substring without duplicate characters.
+
+# Solution: time complexity O(N) and space complexity O(N). 
+
+# Dictionary and two pointer / sliding window
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:        
+        left, right, maxlen, dic = 0, 0, 0, {}
+        while right < len(s):
+            if s[right] not in dic:
+                maxlen = max(maxlen, right - left + 1)
+            elif dic[s[right]] < left:
+                maxlen = max(maxlen, right - left + 1)
+            else:
+                left = dic[s[right]] + 1
+            dic[s[right]] = right
+            right += 1
+        return maxlen
