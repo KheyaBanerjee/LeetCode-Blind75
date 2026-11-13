@@ -8,12 +8,12 @@ The folders are numbered in the same order they are created. I tried to follow t
 The file names of the problems (mostly) follows this pattern - LeetcodeProblemNumber: LeetcodeProblemName -DateCreated(seperated by -)
 
 Each file starts with this information:
-#### Problem link: 
-#### Difficulty: 
+### Problem link: 
+### Difficulty: 
 
-#### Problem statement:
-#### ----
+### Problem statement:
+### ----
 
-#### Solution: write down the time and space complexity O() O()
+### Solution: write down the time and space complexity O() O()
 
 
