@@ -1,0 +1,50 @@
+# Problem link: https://leetcode.com/problems/minimum-window-substring/
+# Difficulty: Hard
+
+# Problem statement:
+# Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string "".
+# The testcases will be generated such that the answer is unique.
+
+# Solution: time complexity O(N) or O(|s|) space complexity O(|s| + |t|). 
+
+
+
+# Soln 1: Sliding window
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        if t == "":
+            return ""
+
+        # Get the characters in the t
+        dict_t, dict_window = {}, {}
+        for char in t:
+            dict_t[char] = 1 + dict_t.get(char, 0)
+
+        have, need = 0, len(dict_t)
+        left, res_len, res = 0, float('inf'), [-1, -1]
+
+        for right in range(len(s)):
+            # Setup dict_window
+            dict_window[s[right]] = 1 + dict_window.get(s[right], 0)
+            
+            # Increment the have as you go
+            if s[right] in dict_t and dict_window[s[right]] == dict_t[s[right]]:
+                have += 1
+            
+            while have == need:
+                # If the character count satisfies, update the result and it's length
+                if (right - left + 1) < res_len:
+                    res = [left, right]
+                    res_len = right - left + 1
+            
+                # Pop from the left
+                dict_window[s[left]] -= 1
+                if s[left] in dict_t and dict_window[s[left]] < dict_t[s[left]]:
+                    have -= 1
+                left += 1
+
+        left, right = res 
+        if res_len != float('inf'):   
+            return s[left: right+1]  
+        else:
+            return ""
