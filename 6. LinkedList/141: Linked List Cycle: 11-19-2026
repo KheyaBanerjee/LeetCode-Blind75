@@ -1,0 +1,68 @@
+# Problem link: https://leetcode.com/problems/linked-list-cycle/
+# Difficulty: Easy
+
+# Problem statement:
+# Given head, the head of a linked list, determine if the linked list has a cycle in it.
+# Return true if there is a cycle in the linked list. Otherwise, return false.
+
+# Solution: Soln. 1: time complexity O(N) and space complexity O(N). 
+#           Soln. 2: time complexity O(N) and space complexity O(1). 
+#           Soln. 3: time complexity O(N) and space complexity O(1). 
+#           Note: Soln. 2 is the easiest, and does not use extra memory like Soln. 1. Soln. 3 is redundant
+
+
+# Soln. 1: Store elements in dictionary
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:        
+        dic = {}
+        while head:
+            if head not in dic:
+                dic[head] = True
+            else:
+                return True
+            head = head.next
+        return False
+
+
+
+# Soln. 2: Fast and slow pointer
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        slow, fast = head, head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                return True            
+        return False
+
+
+
+# Soln. 3: Fast and slow pointer
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        if not head:
+            return False
+        slow, fast = head, head.next
+        while slow != fast:
+            if not fast or not fast.next:
+                return False
+            slow = slow.next
+            fast = fast.next.next
+        return True
+       
