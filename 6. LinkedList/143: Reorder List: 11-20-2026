@@ -1,0 +1,74 @@
+# Problem link: https://leetcode.com/problems/reorder-list/
+# Difficulty: Medium
+
+# Problem statement:
+# You are given the head of a singly linked-list. Reorder the list to be on the following form: L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
+# You may not modify the values in the list's nodes. Only nodes themselves may be changed
+
+
+# Solution: Soln. 1: time complexity O(N) and space complexity O(N). 
+#           Soln. 2: time complexity O(N) and space complexity O(1). 
+#           Note: Soln. 2 does not use extra memory like Soln. 1. Soln. 1 does the reordering in a list, then converts it to a LL.
+
+
+
+
+
+# Soln. 1: Brute force, with O(N) extra space. Put the LL in a list -> split from middle -> reverse the second part -> add together -> convert to LL
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        """
+        Do not return anything, modify head in-place instead.
+        """
+        res = []
+        while head:
+            res.append(head.val)
+            head = head.next
+        mid = len(res) // 2 + len(res) % 2
+        left, right = res[: mid], res[mid:][::-1]
+        root = dummy = ListNode()
+        while left and right:
+            dummy.next = ListNode(left.pop(0))
+            dummy.next.next = ListNode(right.pop(0))
+            dummy = dummy.next.next
+        return root.next
+        
+
+# Soln. 2: In-place, reversing second half
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        """
+        Do not return anything, modify head in-place instead.
+        """
+        # Find the mid point with fast-slow pointer
+        fast, slow = head.next, head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        # Set slow.next to null
+        second = slow.next
+        slow.next = None
+        prev = None
+        # Reverse the list starting slow.next
+        while second:
+            nxt = second.next
+            second.next = prev
+            prev = second
+            second = nxt
+        # Merge two halves
+        first, second = head, prev
+        while second: 
+            tmp1, tmp2 = first.next, second.next
+            first.next = second
+            second.next = tmp1
+            first, second = tmp1, tmp2    
