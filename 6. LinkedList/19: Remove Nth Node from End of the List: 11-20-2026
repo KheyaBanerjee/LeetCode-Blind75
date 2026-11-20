@@ -1,0 +1,60 @@
+# Problem link: https://leetcode.com/problems/remove-nth-node-from-end-of-list/
+# Difficulty: Medium
+
+# Problem statement:
+# Given the head of a linked list, remove the nth node from the end of the list and return its head.
+ 
+
+# Solution: Soln. 1: time complexity O(N) and space complexity O(N). 
+#           Soln. 2: time complexity O(N) and space complexity O(1). 
+#           Note: Soln. 2 does not use extra memory like Soln. 1. 
+
+
+
+# Soln. 1: Brute force, converting to a list -> removing node -> putting into a LL
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:        
+        ll_len, ll_list = 0, []
+        while head:
+            ll_len += 1
+            ll_list.append(head.val)
+            head = head.next
+        root = dummy = ListNode(0)
+        i = 0
+        while i < ll_len:
+            if i == ll_len - n:
+                i += 1
+            if i < ll_len:
+                dummy.next = ListNode(ll_list[i])
+                dummy = dummy.next
+                i += 1
+        return root.next
+     
+
+
+# Soln. 2: Two pointer, first shift one to n nodes
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        dummy = ListNode(val=0, next=head)
+        left = dummy
+        right = head
+        # shift the right to n
+        for _ in range(n):
+            right = right.next
+        # move both until right is Null
+        while right:
+            left = left.next
+            right = right.next
+        # remove 1 node
+        left.next = left.next.next 
+        return dummy.next
