@@ -1,0 +1,87 @@
+# Problem link: https://leetcode.com/problems/same-tree/
+# Difficulty: Easy
+
+# Problem statement:
+# Given the roots of two binary trees p and q, write a function to check if they are the same or not.
+# Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
+
+# Solution: Soln. 1: time complexity O(Np + Nq) and space complexity O(H).
+#           Soln. 2: time complexity O(Np + Nq) and space complexity O(H).
+#           Soln. 3: ??
+#           Note: I personally prefer iterative solutions, wheather DFS or BFS
+
+
+
+
+
+# Soln. 1: DFS - iterative with stack
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:        
+        stackp, stackq = [p], [q]
+        while stackp and stackq:
+            nodep, nodeq = stackp.pop(-1), stackq.pop(-1)
+            if not nodep and not nodeq:
+                continue
+            elif not nodep or not nodeq:
+                return False
+            else:
+                if nodep.val != nodeq.val:
+                    return False
+                stackp.append(nodep.right)
+                stackp.append(nodep.left)
+                stackq.append(nodeq.right)
+                stackq.append(nodeq.left)
+        return True
+        
+
+
+
+
+# Soln. 2: BFS - iterative with queue
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:        
+        queuep, queueq = [p], [q]
+        while queuep and queueq:
+            nodep, nodeq = queuep.pop(), queueq.pop()
+            if not nodep and not nodeq:
+                continue
+            elif not nodep or not nodeq:
+                return False 
+            else:
+                if nodep.val != nodeq.val:
+                    return False
+                queuep.append(nodep.left)
+                queuep.append(nodep.right)
+                queueq.append(nodeq.left)
+                queueq.append(nodeq.right)
+        return True
+
+
+
+
+
+# Soln. 3: Recursive - check left and right part
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        if p and q:
+            return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+        else:
+            return p == q
