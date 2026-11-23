@@ -1,9 +1,8 @@
-# Problem link: https://leetcode.com/problems/linked-list-cycle/
+# Problem link: https://leetcode.com/problems/invert-binary-tree/
 # Difficulty: Easy
 
 # Problem statement:
-# Given head, the head of a linked list, determine if the linked list has a cycle in it.
-# Return true if there is a cycle in the linked list. Otherwise, return false.
+# Given the root of a binary tree, invert the tree, and return its root.
 
 # Solution: Soln. 1: time complexity O(N) and space complexity O(N), because the queue is traversing and storing every node of the tree once.
 #           Soln. 2: time complexity O(N) and space complexity O(N), because the stack is traversing and storing every node of the tree once.
