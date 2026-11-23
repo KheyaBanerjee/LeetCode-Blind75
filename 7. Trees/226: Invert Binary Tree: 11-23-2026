@@ -1,1 +1,79 @@
+# Problem link: https://leetcode.com/problems/linked-list-cycle/
+# Difficulty: Easy
 
+# Problem statement:
+# Given head, the head of a linked list, determine if the linked list has a cycle in it.
+# Return true if there is a cycle in the linked list. Otherwise, return false.
+
+# Solution: Soln. 1: time complexity O(N) and space complexity O(N), because the queue is traversing and storing every node of the tree once.
+#           Soln. 2: time complexity O(N) and space complexity O(N), because the stack is traversing and storing every node of the tree once.
+#           Soln. 3: time complexity O(N) and space complexity O(N), because in the worst case, O(H) is O(N) H = height of the tree.
+#           Note: Need to know all the solutions; this comes handy in solving other problems.
+
+
+
+
+# Soln. 1: BFS, iterative with a queue
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root:
+            return root
+        queue = [root]
+        while queue:
+            node = queue.pop(0)
+            node.left, node.right = node.right, node.left
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        return root
+        
+
+
+
+# Soln. 2: DFS, iterative with a stack
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root:
+            return root
+        stack = [root]
+        while stack:
+            node = stack.pop(-1) # both pop(0)(-1) works ??
+            node.left, node.right = node.right, node.left
+            if node.right:
+                stack.append(node.right)
+            if node.left:
+                stack.append(node.left)
+        return root
+        
+
+
+
+
+# Soln. 3: DFS, recursive
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:        
+        if not root:
+            return None
+        root.left, root.right = root.right, root.left
+        self.invertTree(root.right)
+        self.invertTree(root.left)
+        return root      
